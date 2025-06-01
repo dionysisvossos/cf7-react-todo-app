@@ -1,4 +1,4 @@
-import {Edit, Trash2, Save, X} from "lucide-react";
+import {Edit, Trash2, Save, X, Square, CheckSquare} from "lucide-react";
 import type {TodoListProps} from "./types.ts";
 import {useState} from "react";
 
@@ -37,11 +37,19 @@ const handleSave = (id: number) => () => {
     setEditText("");
 }
 
+const handleToggle = (id: number) => () => {
+    dispatch({type: "COMPLETE", payload: id});
+}
+
     return (
         <>
             <ul className="space-y-2">
                 {todos.map(todo => (
-                <li key={todo.id} className="flex items-center justify-between bg-gray-100 p-2 rounded">
+                <li key={todo.id}
+                    // className="flex items-center justify-between bg-gray-100 p-2 rounded"
+                    className={`flex items-center justify-between bg-gray-100 p-2 rounded 
+                    ${todo.completed ? "opacity-60" : ""}`} >
+
                     {editId === todo.id ? (
                             <>
                             <div className="flex flex-1 gap-2">
@@ -68,9 +76,20 @@ const handleSave = (id: number) => () => {
                         </>
                     ) : (
                         <>
-                            <span>{todo.text}</span>
-                            <div className="flex gap-2">
+                            <div className="flex items-center gap-2 flex-1">
+                                <button
+                                    className="text-green-600"
+                                    onClick={handleToggle(todo.id)}>
+                                    {todo.completed ? (
+                                        <CheckSquare size={18}/>
+                                    ) : (
+                                        <Square size={18}/>
+                                    )}
+                                </button>
 
+                                <span>{todo.text}</span>
+                            </div>
+                            <div className="flex gap-2">
                                 <button
                                     onClick={handleEdit(todo.id, todo.text)}
                                     className="text-cf-gray"
