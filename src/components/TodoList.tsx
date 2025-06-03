@@ -48,7 +48,7 @@ const handleToggle = (id: number) => () => {
                 <li key={todo.id}
                     // className="flex items-center justify-between bg-gray-100 p-2 rounded"
                     className={`flex items-center justify-between bg-gray-100 p-2 rounded 
-                    ${todo.completed ? "opacity-60" : ""}`} >
+                    ${todo.completed ? "opacity-60 line-through" : ""}`} >
 
                     {editId === todo.id ? (
                             <>
