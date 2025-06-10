@@ -1,4 +1,4 @@
-import {useEffect, useReducer} from 'react';
+import {useEffect, useReducer, useRef} from 'react';
 import TodoForm from "./TodoForm.tsx";
 import TodoList from "./TodoList.tsx"
 import type {TodoProps, Action} from "./types.ts";
@@ -55,13 +55,21 @@ const Todo = () =>{
 
     const handleClearAll = () => {
         dispatch({type: "CLEAR_ALL"});
+        inputRef.current?.focus();
     };
+
+    const inputRef = useRef<HTMLInputElement>(null);
+
+    // Focus the input field when the component mounts
+    useEffect(() => {
+        inputRef.current?.focus();
+    })
 
     return (
         <>
             <div className="max-w-sm mx-auto p-6">
                 <h1 className="text-center text-2xl mb-4">To-Do List</h1>
-                <TodoForm dispatch={dispatch} />
+                <TodoForm dispatch={dispatch} inputRef={inputRef} />
                 <TodoList todos={todos} dispatch={dispatch} />
 
                 {todos.length > 0 && (
